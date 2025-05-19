@@ -1,5 +1,5 @@
 export default class People {
-    readonly name: string;
+    private name: string;
     private phone: string;
 
     constructor(
@@ -21,5 +21,9 @@ export default class People {
     public udpatePhone(value: string) {
         if(value.length !== 13) throw new Error("Invalid format phone")
         this.phone = value
+    }
+
+    public updateName(value: string) {
+        this.name = value;
     }
 }

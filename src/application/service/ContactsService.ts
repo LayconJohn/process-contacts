@@ -3,7 +3,7 @@ import People from "../../domain/entity/People";
 export default class PersonService {
     process(people: People[]){
         const filteredPeople = people.slice(1).filter((v) => {
-        return v?.name && v?.getPhone() ;
+        return v?.getName() && v?.getPhone() ;
         });
         console.log("Pessoas com dados válidos: ", filteredPeople.length);
 
@@ -14,12 +14,12 @@ export default class PersonService {
                 if(onlyNumberPhone.length == 11) {
                     //73988675742
                     return {
-                        name: value.name,
+                        name: value.getName(),
                         phone: `55${value.getPhone()}`
                     }
                 } else if (onlyNumberPhone.length == 10) {
                     return {
-                        name: value.name,
+                        name: value.getName(),
                         phone: `55${value.getPhone().slice(0, 2)}9${value.getPhone().slice(2)}`
                     }
                 } else {
