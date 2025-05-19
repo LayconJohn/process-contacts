@@ -6,10 +6,19 @@ export default class XlsxAdapter implements XlsxClient {
     processWorkbook(filePath: string): People[] {
     const workbook = xlsx.readFile(`public/${filePath}`, {raw: true});
     const worksheet = workbook.Sheets[workbook.SheetNames[0]];
-    const range = worksheet['!ref'] &&xlsx.utils.decode_range(worksheet['!ref']);
-    const people = [];
+     const range = worksheet['!ref'] 
+        ? xlsx.utils.decode_range(worksheet['!ref'])
+        : null;
+    // const range = worksheet['!ref'] &&xlsx.utils.decode_range(worksheet['!ref']);
+    if (!range) {
+        throw new Error("Planilha vazia ou formato inválido");
+    }
 
-    for(let rowNum = range.s.r; rowNum <= range.e.r; rowNum ++) {
+    const people = [];
+    const startRow = range.s.r ?? 0;
+    const endRow = range.e.r ?? 0;
+
+    for(let rowNum = startRow; rowNum <= endRow; rowNum ++) {
         const person: People = new People("", "");
 
         //Coluna A (Nome)
